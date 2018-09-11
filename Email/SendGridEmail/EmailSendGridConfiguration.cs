@@ -32,16 +32,16 @@ namespace Email
         public static IEmailConfiguration CreateDefault()
         {
             // REEMPLAZAR.
-            var apyKey = "[APIKEY]";
-            var username = "[USUARIO]";
-            var password = "[CONTRASEÑA]";
-            var host = "smtp.sendgrid.net";
+            var apyKey = "";
+            var username = "";
+            var password = "";
+            var host = "";
             var port = 25;
-            var enableSsl = true;
-            var fromEmail = new EmailAddressModel("[DE EMAIL]", "");
-            var subject = "Email Test Send Grid";
+            var enableSsl = false;
+            var fromEmail = new EmailAddressModel("", "");
+            var subject = "Email Test .NET";
             var to = new List<EmailAddressModel> {
-                new EmailAddressModel("[PARA EMAIL]", "")
+                new EmailAddressModel("", "")
             };
 
             var body = EmailBodyModel.CreateBodyHtmlTemplate(

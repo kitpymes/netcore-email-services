@@ -27,15 +27,15 @@ namespace Email
         public static IEmailConfiguration CreateDefault()
         {
             // REEMPLAZAR.
-            var username = "hola@obelisco.shop";
-            var password = "Shop01";
-            var host = "smtpout.europe.secureserver.net";
+            var username = "";
+            var password = "";
+            var host = "";
             var port = 25;
             var enableSsl = false;
-            var fromEmail = new EmailAddressModel("hola@obelisco.shop", "");
+            var fromEmail = new EmailAddressModel("", "");
             var subject = "Email Test .NET";
             var to = new List<EmailAddressModel> {
-                new EmailAddressModel("sferrari.net@gmail.com", "")
+                new EmailAddressModel("", "")
             };
 
             var body = EmailBodyModel.CreateBodyHtmlTemplate(
