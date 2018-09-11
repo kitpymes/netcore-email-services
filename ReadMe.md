@@ -8,9 +8,7 @@ El objetivo es crear un servicio de envio de emails que soporte archivos comprim
 
 **System.Net.Mail:** es la libreria de .NET para el envio de emails.
 
-Reemplazar los parametros del servicio: ***NetEmailService***
-
-Soporta archivos comprimidos, adjuntos, exchange y templates.
+El servicio soporta archivos comprimidos, adjuntos, exchange y templates.
 
 ![Screenshot](Screenshots/netemail.png)
 
@@ -20,9 +18,7 @@ Soporta archivos comprimidos, adjuntos, exchange y templates.
 
 ***SendGrid.Helpers.Mail:*** es la libreria de SendGrid para el envio de emails.
 
-Reemplazar los parametros del servicio: ***SendGridEmailService***
-
-Soporta archivos comprimidos, adjuntos y templates.
+El servicio soporta archivos comprimidos, adjuntos y templates.
 
 ***Doc oficial:*** https://github.com/sendgrid/sendgrid-csharp
 
