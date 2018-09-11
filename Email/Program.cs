@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace Email
 {
@@ -8,11 +9,11 @@ namespace Email
         {
             try
             {
-                // Reemplazar la configuracion en la clase "NetEmailConfiguration"
-                new NetEmailService().SendAsync(NetEmailConfiguration.CreateDefault()).Wait();
+                // Reemplazar la configuracion en la clase "EmailNetConfiguration"
+                new EmailNetService().SendAsync(EmailNetConfiguration.CreateDefault()).Wait();
 
-                // Reemplazar la configuracion en la clase "SendGridEmailConfiguration"
-                new SendGridEmailService().SendAsync(SendGridEmailConfiguration.CreateDefault()).Wait();
+                // Reemplazar la configuracion en la clase "EmailSendGridConfiguration"
+                //new EmailSendGridService().SendAsync(EmailSendGridConfiguration.CreateDefault()).Wait();
             }
             catch (ApplicationException ex)
             {

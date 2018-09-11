@@ -13,14 +13,14 @@ namespace Email
            bool enableSsl,
            EmailAddressModel emailAddress,
            string subject,
-           string body,
+           EmailBodyModel body,
            List<EmailAddressModel> to)
         {
             if (string.IsNullOrEmpty(username)
                 || string.IsNullOrEmpty(password)
                 || string.IsNullOrEmpty(host)
                 || string.IsNullOrEmpty(subject)
-                || string.IsNullOrEmpty(body)
+                || body is null
                 || to?.Any() != true)
             {
                 throw new System.ApplicationException($"Los parámetros " +
@@ -52,7 +52,7 @@ namespace Email
         public bool EnableSsl { get; protected set; }
         public EmailAddressModel EmailAddress { get; protected set; }
         public string Subject { get; protected set; }
-        public string Body { get; protected set; }
+        public EmailBodyModel Body { get; protected set; }
         public List<EmailAddressModel> To { get; protected set; }
 
         // Opcionales

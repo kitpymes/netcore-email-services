@@ -1,13 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace Email
 {
-    public class SendGridEmailConfiguration : EmailConfigurationModel
+    public class EmailSendGridConfiguration : EmailConfigurationModel
     {
         public string ApyKey { get; }
 
-        public SendGridEmailConfiguration(
+        public EmailSendGridConfiguration(
            string apyKey,
            string username,
            string password,
@@ -16,7 +17,7 @@ namespace Email
            bool enableSsl,
            EmailAddressModel fromEmail,
            string subject,
-           string body,
+           EmailBodyModel body,
            List<EmailAddressModel> to)
             : base(username, password, host, port, enableSsl, fromEmail, subject, body, to)
         {
@@ -30,7 +31,7 @@ namespace Email
 
         public static IEmailConfiguration CreateDefault()
         {
-            // Parámetros obligatorios, reemplazar.
+            // REEMPLAZAR.
             var apyKey = "[APIKEY]";
             var username = "[USUARIO]";
             var password = "[CONTRASEÑA]";
@@ -39,16 +40,22 @@ namespace Email
             var enableSsl = true;
             var fromEmail = new EmailAddressModel("[DE EMAIL]", "");
             var subject = "Email Test Send Grid";
-
-            var body = "<h1>Email Test</h1> <p>Este email fue enviado por " +
-                      "<a href='https://sferrari.micv.online'>Analista Programador .NET FREELANCE</a> " +
-                      "<b>Utilizando SendGrid</b></p>";
-
             var to = new List<EmailAddressModel> {
                 new EmailAddressModel("[PARA EMAIL]", "")
             };
 
-            return new SendGridEmailConfiguration(apyKey, username, password, host, port, enableSsl, fromEmail, subject, body, to)
+            var body = EmailBodyModel.CreateBodyHtmlTemplate(
+                bodyHtmlTemplatePath: Directory.GetCurrentDirectory().Split("bin")[0] + @"Common\Files\Templates",
+                bodyTemplateName: EmailBodyModel.BodyTemplateName.Vencimiento,
+                bodyHtmlTemplateValues: new Dictionary<string, string> {
+                    { "{FECHA}", $"{DateTime.Now.Day} / {DateTime.Now.Month} / {DateTime.Now.Year}"},
+                    { "{NOMBRE}", "Alberto" },
+                    { "{CONTENIDO}", "<h1>Email Test</h1> <p>Este email fue enviado por " +
+                          "<a href='https://sferrari.micv.online'>Analista Programador .NET FREELANCE</a> " +
+                         "<b>Utilizando SendGrid</b></p>"}
+                });
+
+            return new EmailSendGridConfiguration(apyKey, username, password, host, port, enableSsl, fromEmail, subject, body, to)
             {
                 UseDefaultCredentials = false,
                 Timeout = 6000,

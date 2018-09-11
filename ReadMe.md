@@ -1,6 +1,6 @@
 # Servicio de envio de Emails
 
-El objetivo es crear un servicio de envio de emails que soporte archivos comprimidos y adjuntos.
+El objetivo es crear un servicio de envio de emails que soporte archivos comprimidos, adjuntos y templates.
 
 ## Información
 
@@ -10,7 +10,7 @@ El objetivo es crear un servicio de envio de emails que soporte archivos comprim
 
 Reemplazar los parametros del servicio: ***NetEmailService***
 
-Soporta archivos comprimidos, adjuntos y exchange.
+Soporta archivos comprimidos, adjuntos, exchange y templates.
 
 ![Screenshot](Screenshots/netemail.png)
 
@@ -22,7 +22,7 @@ Soporta archivos comprimidos, adjuntos y exchange.
 
 Reemplazar los parametros del servicio: ***SendGridEmailService***
 
-Soporta archivos comprimidos y adjuntos.
+Soporta archivos comprimidos, adjuntos y templates.
 
 ***Doc oficial:*** https://github.com/sendgrid/sendgrid-csharp
 

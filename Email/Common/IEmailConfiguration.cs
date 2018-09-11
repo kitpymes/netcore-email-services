@@ -12,7 +12,7 @@ namespace Email
         bool EnableSsl { get; }
         EmailAddressModel EmailAddress { get; }
         string Subject { get; }
-        string Body { get; }
+        EmailBodyModel Body { get; }
         List<EmailAddressModel> To { get; }
 
         // Opcionales

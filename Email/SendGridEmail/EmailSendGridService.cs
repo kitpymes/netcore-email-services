@@ -2,13 +2,12 @@
 using SendGrid.Helpers.Mail;
 using System;
 using System.IO;
-using System.IO.Compression;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Email
 {
-    public class SendGridEmailService : IEmailService
+    public class EmailSendGridService : IEmailService
     {
         public async Task<bool> SendAsync(IEmailConfiguration config)
         {
@@ -17,12 +16,12 @@ namespace Email
                 throw new ApplicationException($"{nameof(config)} es null.");
             }
 
-            if (!(config is SendGridEmailConfiguration))
+            if (!(config is EmailSendGridConfiguration))
             {
-                throw new ApplicationException($"{nameof(config)} es de tipo {config.GetType()} , pero tiene que ser del tipo {nameof(SendGridEmailConfiguration)}");
+                throw new ApplicationException($"{nameof(config)} es de tipo {config.GetType()} , pero tiene que ser del tipo {nameof(EmailSendGridConfiguration)}");
             }
 
-            var emailConfig = config as SendGridEmailConfiguration;
+            var emailConfig = config as EmailSendGridConfiguration;
 
             var client = new SendGridClient(emailConfig.ApyKey);
 
@@ -30,7 +29,7 @@ namespace Email
             {
                 From = new EmailAddress(emailConfig.EmailAddress.FromEmail, emailConfig.EmailAddress.FromName),
                 Subject = emailConfig.Subject,
-                HtmlContent = emailConfig.Body 
+                HtmlContent = emailConfig.Body.Value
             };
 
             emailConfig.To.ForEach(to => msg.AddTo(to.FromEmail, to.FromName));
@@ -47,14 +46,20 @@ namespace Email
 
             if (emailConfig.Attachement.IsAttachement)
             {
-                if (!Directory.Exists(emailConfig.Attachement.AttachementPathDirectory))
-                {
-                    throw new ApplicationException($"El directorio {emailConfig.Attachement.AttachementPathDirectory} no existe.");
-                }
+                Utils.DirectoryExistsThrowException(emailConfig.Attachement.AttachementPathDirectory);
 
                 if (emailConfig.Zip.IsCompressed)
                 {
-                    CompressFiles(emailConfig, msg);
+                    Utils.ZipFiles(emailConfig.Attachement.AttachementPathDirectory, emailConfig.Zip.ZipPathDirectory, emailConfig.Zip.IsDelete);
+
+                    var file = Utils.ReadAllBytes(emailConfig.Zip.ZipPathDirectory).FirstOrDefault();
+
+                    msg.AddAttachment(file.filename, file.fileConvert);
+
+                    if (emailConfig.Zip.IsDelete)
+                    {
+                        Utils.DeleteFilesDirectory(emailConfig.Zip.ZipPathDirectory, true);
+                    }
                 }
                 else
                 {
@@ -65,7 +70,7 @@ namespace Email
                 }
             }
 
-            Console.WriteLine($"\nEnviando email con {nameof(SendGridEmailService)}...");
+            Console.WriteLine($"\nEnviando email con {nameof(EmailSendGridService)}...");
 
             var response = await client.SendEmailAsync(msg).ConfigureAwait(false);
 
@@ -77,33 +82,6 @@ namespace Email
 
             return response.StatusCode == System.Net.HttpStatusCode.Accepted;
 
-        }
-
-        private static void CompressFiles(SendGridEmailConfiguration emailConfig, SendGridMessage msg)
-        {
-            try
-            {
-                ZipFile.CreateFromDirectory(emailConfig.Attachement.AttachementPathDirectory, emailConfig.Zip.ZipPathDirectory + "/files.zip");
-
-                var file = Utils.ReadAllBytes(emailConfig.Zip.ZipPathDirectory).FirstOrDefault();
-
-                msg.AddAttachment(file.filename, file.fileConvert);
-
-                if (emailConfig.Zip.IsDelete)
-                {
-                    Utils.DeleteFilesDirectory(emailConfig.Zip.ZipPathDirectory, true);
-                }
-
-            }
-            catch (UnauthorizedAccessException ex)
-            {
-                if (emailConfig.Zip.IsDelete)
-                {
-                    Utils.DeleteFilesDirectory(emailConfig.Zip.ZipPathDirectory, true);
-                }
-
-                throw;
-            }
         }
     }
 }

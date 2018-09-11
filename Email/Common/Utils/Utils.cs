@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 
 namespace Email
 {
@@ -57,6 +58,31 @@ namespace Email
             if (deleteDirectory)
             {
                 Directory.Delete(pathDirectory);
+            }
+        }
+
+        public static void ZipFiles(string filesToZipPathDirectory, string directorySaveZipPathDirectory, bool removeDirectorySaveZipPathDirectory, string zipName = "/files.zip")
+        {
+            try
+            {
+                ZipFile.CreateFromDirectory(filesToZipPathDirectory, directorySaveZipPathDirectory + zipName);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                if (removeDirectorySaveZipPathDirectory)
+                {
+                    Utils.DeleteFilesDirectory(directorySaveZipPathDirectory, true);
+                }
+
+                throw;
+            }
+        }
+
+        public static void DirectoryExistsThrowException(string directoryPath)
+        {
+            if (!Directory.Exists(directoryPath))
+            {
+                throw new ApplicationException($"El directorio {directoryPath} no existe.");
             }
         }
     }
