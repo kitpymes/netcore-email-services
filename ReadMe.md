@@ -10,8 +10,6 @@ El objetivo es crear un servicio de envio de emails que soporte archivos comprim
 
 El servicio soporta archivos comprimidos, adjuntos, exchange y templates.
 
-![Screenshot](Screenshots/netemail.png)
-
 ***Doc oficial:*** https://msdn.microsoft.com/es-es/library/system.net.mail(v=vs.110).aspx
 
 ### Envio de emails con la librería de SendGrid
@@ -24,7 +22,7 @@ El servicio soporta archivos comprimidos, adjuntos y templates.
 
 ### Resultado
 
-![Screenshot](Screenshots/console.png)
+![Screenshot](Screenshots/netemail.png)
 
 ## Testeado
 
