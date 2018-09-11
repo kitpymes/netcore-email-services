@@ -20,7 +20,7 @@ El servicio soporta archivos comprimidos, adjuntos y templates.
 
 ***Doc oficial:*** https://github.com/sendgrid/sendgrid-csharp
 
-### Resultado
+## Resultado
 
 ![Screenshot](Screenshots/netemail.png)
 
