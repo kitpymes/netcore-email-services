@@ -6,7 +6,7 @@ El objetivo es crear un servicio de envio de emails que soporte archivos comprim
 
 ### Envio de emails con la librería de .NET
 
-*System.Net.Mail:* es la libreria de .NET para el envio de emails.
+***System.Net.Mail:*** es la libreria de .NET para el envio de emails.
 
 El servicio soporta archivos comprimidos, adjuntos, exchange y templates.
 
@@ -14,7 +14,7 @@ El servicio soporta archivos comprimidos, adjuntos, exchange y templates.
 
 ### Envio de emails con la librería de SendGrid
 
-*SendGrid.Helpers.Mail:* es la libreria de SendGrid para el envio de emails.
+***SendGrid.Helpers.Mail:*** es la libreria de SendGrid para el envio de emails.
 
 El servicio soporta archivos comprimidos, adjuntos y templates.
 
