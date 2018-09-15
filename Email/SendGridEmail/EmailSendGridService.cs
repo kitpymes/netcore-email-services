@@ -11,17 +11,9 @@ namespace Email
     {
         public async Task<bool> SendAsync(IEmailConfiguration config)
         {
-            if (config is null)
-            {
-                throw new ApplicationException($"{nameof(config)} es null.");
-            }
+            Utils.IsNullThrowException<IEmailConfiguration>(config, nameof(config));
 
-            if (!(config is EmailSendGridConfiguration))
-            {
-                throw new ApplicationException($"{nameof(config)} es de tipo {config.GetType()} , pero tiene que ser del tipo {nameof(EmailSendGridConfiguration)}");
-            }
-
-            var emailConfig = config as EmailSendGridConfiguration;
+            var emailConfig = Utils.IsEqualTypeThrowException<IEmailConfiguration, EmailSendGridConfiguration>(config, nameof(config));
 
             var client = new SendGridClient(emailConfig.ApyKey);
 
@@ -46,7 +38,7 @@ namespace Email
 
             if (emailConfig.Attachement.IsAttachement)
             {
-                Utils.DirectoryExistsThrowException(emailConfig.Attachement.AttachementPathDirectory);
+                Utils.IsDirectoryExistsThrowException(emailConfig.Attachement.AttachementPathDirectory);
 
                 if (emailConfig.Zip.IsCompressed)
                 {
@@ -70,15 +62,15 @@ namespace Email
                 }
             }
 
-            Console.WriteLine($"\nEnviando email con {nameof(EmailSendGridService)}...");
+            Utils.Show($"Enviando email con {nameof(EmailSendGridService)}... Espere por favor...", true);
 
             var response = await client.SendEmailAsync(msg).ConfigureAwait(false);
 
-            var message = (response.StatusCode == System.Net.HttpStatusCode.Accepted)
-                ? $"El email fue enviado correctamente! El StatusCode es: {response.StatusCode}"
-                : $"El email NO pudo ser enviado! El StatusCode es: {response.StatusCode}";
+            var message = ((response.StatusCode == System.Net.HttpStatusCode.Accepted)
+                ? "El email fue enviado correctamente! "
+                : "El email NO pudo ser enviado! ") + $"El StatusCode devuelto por SendGrid es: { response.StatusCode}";
 
-            Console.WriteLine(message);
+            Utils.Show(message);
 
             return response.StatusCode == System.Net.HttpStatusCode.Accepted;
 

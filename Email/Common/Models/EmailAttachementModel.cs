@@ -4,12 +4,7 @@
     {
         public EmailAttachementModel(string attachementPathDirectory)
         {
-            if (string.IsNullOrEmpty(attachementPathDirectory))
-            {
-                throw new System.ApplicationException($"El parametro {nameof(attachementPathDirectory)}, es requerido.");
-            }
-
-            AttachementPathDirectory = attachementPathDirectory;
+            AttachementPathDirectory = Utils.IsNullOrEmptyThrowException(attachementPathDirectory, nameof(attachementPathDirectory));
         }
 
         public string AttachementPathDirectory { get; }

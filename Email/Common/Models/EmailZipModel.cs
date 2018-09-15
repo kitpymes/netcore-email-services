@@ -4,10 +4,7 @@
     {
         public EmailZipModel(string zipPathDirectory, bool isDelete= true)
         {
-            if (string.IsNullOrEmpty(zipPathDirectory))
-            {
-                throw new System.ApplicationException($"El parametro {nameof(zipPathDirectory)}, es requerido.");
-            }
+            Utils.IsDirectoryExistsThrowException(zipPathDirectory);
 
             ZipPathDirectory = zipPathDirectory;
             IsDelete = isDelete;

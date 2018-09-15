@@ -4,13 +4,8 @@
     {
         public EmailAddressModel(string fromEmail, string fromName = "")
         {
-            if (string.IsNullOrEmpty(fromEmail))
-            {
-                throw new System.ApplicationException($"El parametro {nameof(fromEmail)}, es requerido.");
-            }
-
-            FromEmail = fromEmail;
-            FromName = fromName; 
+            FromEmail = Utils.IsNullOrEmptyThrowException(fromEmail, nameof(fromEmail));
+            FromName = fromName;
         }
 
         public string FromEmail { get;}

@@ -10,17 +10,17 @@ namespace Email
         string Host { get; }
         int Port { get; }
         bool EnableSsl { get; }
-        EmailAddressModel EmailAddress { get; }
         string Subject { get; }
+        EmailAddressModel EmailAddress { get; }
         EmailBodyModel Body { get; }
         List<EmailAddressModel> To { get; }
 
         // Opcionales
         int Timeout { get; }
         bool UseDefaultCredentials { get; }
-        List<EmailAddressModel> Cc { get; }
-        List<EmailAddressModel> Bcc { get; }
         EmailZipModel Zip { get; }
         EmailAttachementModel Attachement { get; }
+        List<EmailAddressModel> Cc { get; }
+        List<EmailAddressModel> Bcc { get; }
     }
 }

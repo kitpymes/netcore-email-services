@@ -13,17 +13,9 @@ namespace Email
     {
         public async Task<bool> SendAsync(IEmailConfiguration config)
         {
-            if (config is null)
-            {
-                throw new ApplicationException($"{nameof(config)} es null.");
-            }
+            Utils.IsNullThrowException<IEmailConfiguration>(config, nameof(config));
 
-            if (!(config is EmailNetConfiguration))
-            {
-                throw new ApplicationException($"{nameof(config)} es de tipo {config.GetType()} , pero tiene que ser del tipo {nameof(EmailNetConfiguration)}");
-            }
-
-            var emailConfig = config as EmailNetConfiguration;
+            var emailConfig = Utils.IsEqualTypeThrowException<IEmailConfiguration, EmailNetConfiguration>(config, nameof(config));
 
             if (emailConfig.IsExchange)
             {
@@ -51,7 +43,7 @@ namespace Email
 
             if (emailConfig.Attachement.IsAttachement)
             {
-                Utils.DirectoryExistsThrowException(emailConfig.Attachement.AttachementPathDirectory);
+                Utils.IsDirectoryExistsThrowException(emailConfig.Attachement.AttachementPathDirectory);
 
                 if (emailConfig.Zip.IsCompressed)
                 {
@@ -65,7 +57,6 @@ namespace Email
                     {
                         Utils.DeleteFilesDirectory(emailConfig.Zip.ZipPathDirectory, true);
                     }
-
                 }
                 else
                 {
@@ -85,11 +76,11 @@ namespace Email
                 {
                     if (e.Error != null)
                     {
-                        Console.WriteLine($"El email NO pudo ser enviado ! Ocurio el siguiente error: {e.Error.Message}");
+                        Utils.Show("El email NO pudo ser enviado !");
                     }
                     else
                     {
-                        Console.WriteLine($"El email fue enviado correctamente !");
+                        Utils.Show($"El email fue enviado correctamente !");
                     }
 
                     var userMessage = e.UserState as MailMessage;
@@ -99,7 +90,7 @@ namespace Email
                     }
                 };
 
-                Console.WriteLine($"\nEnviando email con {nameof(EmailNetService)}...");
+                Utils.Show($"Enviando email con {nameof(EmailNetService)}... Espere por favor...", true);
 
                 await client.SendMailAsync(msg);
             }
@@ -139,7 +130,7 @@ namespace Email
 
             if (emailConfig.Attachement.IsAttachement)
             {
-                Utils.DirectoryExistsThrowException(emailConfig.Attachement.AttachementPathDirectory);
+                Utils.IsDirectoryExistsThrowException(emailConfig.Attachement.AttachementPathDirectory);
 
                 if (emailConfig.Zip.IsCompressed)
                 {
@@ -163,7 +154,7 @@ namespace Email
                 }
             }
 
-            Console.WriteLine($"\nEnviando email con {nameof(EmailNetService)}...");
+            Utils.Show($"\nEnviando email con {nameof(EmailNetService)}...");
 
             message.Save();
             message.SendAndSaveCopy();

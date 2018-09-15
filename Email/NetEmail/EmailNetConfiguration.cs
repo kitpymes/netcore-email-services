@@ -16,11 +16,11 @@ namespace Email
             string host,
             int port,
             bool enableSsl,
-            EmailAddressModel fromEmail,
             string subject,
+            EmailAddressModel fromEmail,
             EmailBodyModel body,
             List<EmailAddressModel> to)
-             : base(username, password, host, port, enableSsl, fromEmail, subject, body, to)
+             : base(username, password, host, port, enableSsl, subject, fromEmail, body, to)
         {
         }
 
@@ -32,8 +32,8 @@ namespace Email
             var host = "";
             var port = 25;
             var enableSsl = false;
-            var fromEmail = new EmailAddressModel("", "");
             var subject = "Email Test .NET";
+            var fromEmail = new EmailAddressModel("", "");
             var to = new List<EmailAddressModel> {
                 new EmailAddressModel("", "")
             };
@@ -49,7 +49,7 @@ namespace Email
                          "<b>Utilizando .NET System.Net.Mail</b></p>"}
                 });
 
-            return new EmailNetConfiguration(username, password, host, port, enableSsl, fromEmail, subject, body, to)
+            return new EmailNetConfiguration(username, password, host, port, enableSsl, subject, fromEmail, body, to)
             {
                 UseDefaultCredentials = false,
                 EmailExchange = null, // new EmailExchangeModel(ExchangeVersion.Exchange2007_SP1, TraceFlags.All),

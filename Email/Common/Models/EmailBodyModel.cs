@@ -26,17 +26,11 @@ namespace Email
 
         public static EmailBodyModel CreateBodyHtmlTemplate(string bodyHtmlTemplatePath, BodyTemplateName bodyTemplateName, Dictionary<string, string> bodyHtmlTemplateValues = null)
         {
-            if (string.IsNullOrEmpty(bodyHtmlTemplatePath))
-            {
-                throw new System.ApplicationException($"El parámetro {nameof(bodyHtmlTemplatePath)}, es requerido.");
-            }
+            Utils.IsNullOrEmptyThrowException(bodyHtmlTemplatePath, nameof(bodyHtmlTemplatePath));
 
             var filePath = Path.Combine(bodyHtmlTemplatePath, bodyTemplateName.Value);
 
-            if (!File.Exists(filePath))
-            {
-                throw new System.ApplicationException($"El template {filePath} no existe.");
-            }
+            Utils.IsFileExistsThrowException(filePath);
 
             var template = new StreamReader(filePath).ReadToEnd();
 
@@ -53,20 +47,14 @@ namespace Email
 
         public static EmailBodyModel CreateBodyHtml(string bodyHtml)
         {
-            if (string.IsNullOrEmpty(bodyHtml))
-            {
-                throw new System.ApplicationException($"El parámetro {nameof(bodyHtml)}, es requerido.");
-            }
+            Utils.IsNullOrEmptyThrowException(bodyHtml, nameof(bodyHtml));
 
             return new EmailBodyModel(bodyHtml);
         }
 
         public static EmailBodyModel CreateBodyText(string bodyPlainText)
         {
-            if (string.IsNullOrEmpty(bodyPlainText))
-            {
-                throw new System.ApplicationException($"El parámetro {nameof(bodyPlainText)}, es requerido.");
-            }
+            Utils.IsNullOrEmptyThrowException(bodyPlainText, nameof(bodyPlainText));
 
             return new EmailBodyModel($"<p>{bodyPlainText}</p>");
         }

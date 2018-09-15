@@ -9,23 +9,22 @@ namespace Email
         {
             try
             {
-                // Reemplazar la configuracion en la clase "EmailNetConfiguration"
+                // Envia email con .NET
                 new EmailNetService().SendAsync(EmailNetConfiguration.CreateDefault()).Wait();
 
-                // Reemplazar la configuracion en la clase "EmailSendGridConfiguration"
+                // Envia email con SendGrid
                 //new EmailSendGridService().SendAsync(EmailSendGridConfiguration.CreateDefault()).Wait();
             }
             catch (ApplicationException ex)
             {
-                Console.WriteLine("Ocurrio el siguiente error:\n" + ex.Message);
+                Utils.Show("Ocurrio el siguiente error:" + ex.Message, false, true);
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Ocurrio un error inesperado:\n" + ex.Message);
+                Utils.Show("Ocurrio un error inesperado:" + ex.Message, false, true);
             }
 
-            Console.WriteLine("\nOprima una tecla para continuar...");
-            Console.ReadLine();
+            Utils.Show("Oprima una tecla para terminar...", true, readLine: true);
         }
     }
 }

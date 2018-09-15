@@ -15,18 +15,13 @@ namespace Email
            string host,
            int port,
            bool enableSsl,
-           EmailAddressModel fromEmail,
            string subject,
+           EmailAddressModel fromEmail,
            EmailBodyModel body,
            List<EmailAddressModel> to)
-            : base(username, password, host, port, enableSsl, fromEmail, subject, body, to)
+            : base(username, password, host, port, enableSsl, subject, fromEmail, body, to)
         {
-            if (string.IsNullOrEmpty(apyKey))
-            {
-                throw new System.ApplicationException($"El parámetro {nameof(apyKey)} es requerido.");
-            }
-
-            ApyKey = apyKey;
+            ApyKey = Utils.IsNullOrEmptyThrowException(apyKey, nameof(apyKey));
         }
 
         public static IEmailConfiguration CreateDefault()
@@ -38,8 +33,8 @@ namespace Email
             var host = "";
             var port = 25;
             var enableSsl = false;
-            var fromEmail = new EmailAddressModel("", "");
             var subject = "Email Test .NET";
+            var fromEmail = new EmailAddressModel("", "");
             var to = new List<EmailAddressModel> {
                 new EmailAddressModel("", "")
             };
@@ -55,7 +50,7 @@ namespace Email
                          "<b>Utilizando SendGrid</b></p>"}
                 });
 
-            return new EmailSendGridConfiguration(apyKey, username, password, host, port, enableSsl, fromEmail, subject, body, to)
+            return new EmailSendGridConfiguration(apyKey, username, password, host, port, enableSsl, subject, fromEmail, body, to)
             {
                 UseDefaultCredentials = false,
                 Timeout = 6000,
