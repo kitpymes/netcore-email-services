@@ -39,7 +39,7 @@ namespace Email
             };
 
             var body = EmailBodyModel.CreateBodyHtmlTemplate(
-                bodyHtmlTemplatePath: Directory.GetCurrentDirectory().Split("bin")[0] + @"Common\Files\Templates", 
+                bodyHtmlTemplatePath: Utils.GetDirectoryFromProject(@"Common\Files\Templates"), 
                 bodyTemplateName: EmailBodyModel.BodyTemplateName.Vencimiento,
                 bodyHtmlTemplateValues: new Dictionary<string, string> {
                     { "{FECHA}", $"{DateTime.Now.Day} / {DateTime.Now.Month} / {DateTime.Now.Year}"},
@@ -56,7 +56,7 @@ namespace Email
                 Timeout = 6000,
                 Cc = null,
                 Bcc = null,
-                Attachement =  new EmailAttachementModel(Directory.GetCurrentDirectory().Split("bin")[0] + @"Common\Files\Attachments"),
+                Attachement =  new EmailAttachementModel(Utils.GetDirectoryFromProject(@"Common\Files\Attachments")),
                 Zip = new EmailZipModel(Utils.CreateAndGetDirectoryTemporary(true))
             };
         }

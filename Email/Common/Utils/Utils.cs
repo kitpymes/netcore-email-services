@@ -32,6 +32,15 @@ namespace Email
             return filesReading;
         }
 
+        public static string GetDirectoryFromProject(string directoryPath)
+        {
+            var path = Directory.GetCurrentDirectory().Split("bin")[0] + directoryPath;
+
+            IsDirectoryExistsThrowException(path);
+
+            return path;
+        }
+
         public static string CreateAndGetDirectoryTemporary(bool withRandomFolder = true)
         {
             string tempDirectory = withRandomFolder ? Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()) : Path.GetTempPath();
