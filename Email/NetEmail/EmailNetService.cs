@@ -155,8 +155,8 @@ namespace Email
 
             Utils.Show($"\nEnviando email con {nameof(EmailNetService)}...");
 
-            message.Save();
-            message.SendAndSaveCopy();
+            await message.Save();
+            await message.SendAndSaveCopy();
 
             return await Task.FromResult(true);
         }
