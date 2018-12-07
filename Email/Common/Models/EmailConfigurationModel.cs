@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 
 namespace Email
 {
@@ -8,23 +7,23 @@ namespace Email
         protected EmailConfigurationModel(
            string username,
            string password,
+           EmailAddressModel fromEmail,
+           List<EmailAddressModel> toEmail,
            string host,
            int port,
            bool enableSsl,
            string subject,
-           EmailAddressModel emailAddress,
-           EmailBodyModel body,
-           List<EmailAddressModel> to)
+           EmailBodyModel body)
         {
             Username = Utils.IsNullOrEmptyThrowException(username, nameof(username));
             Password = Utils.IsNullOrEmptyThrowException(password, nameof(password));
+            EmailAddress = Utils.IsNullThrowException<EmailAddressModel>(fromEmail, nameof(fromEmail));
+            To = Utils.IsNullAndCountThrowException(toEmail, nameof(toEmail));
             Host = Utils.IsNullOrEmptyThrowException(host, nameof(host));
             Port = port;
             EnableSsl = enableSsl;
             Subject = Utils.IsNullOrEmptyThrowException(subject, nameof(subject));
-            EmailAddress = Utils.IsNullThrowException<EmailAddressModel>(emailAddress, nameof(emailAddress));
             Body = Utils.IsNullThrowException<EmailBodyModel>(body, nameof(body));
-            To = Utils.IsNullAndCountThrowException(to, nameof(to));
         }
         
         // Obligatorios

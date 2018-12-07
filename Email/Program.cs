@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 
 namespace Email
 {
@@ -9,11 +8,21 @@ namespace Email
         {
             try
             {
-                // Envia email con .NET
+                // Envia default email con .NET
                 new EmailNetService().SendAsync(EmailNetConfiguration.CreateDefault()).Wait();
 
-                // Envia email con SendGrid
-                //new EmailSendGridService().SendAsync(EmailSendGridConfiguration.CreateDefault()).Wait();
+                // Envia custom email con .NET
+                //new EmailNetService().SendAsync(new EmailNetConfiguration(
+                //// Valores.....    
+                //)).Wait();
+
+                // Envia default email con SendGrid
+                new EmailSendGridService().SendAsync(EmailSendGridConfiguration.CreateDefault()).Wait();
+
+                // Envia custom email con SendGrid
+                //new EmailSendGridService().SendAsync(new EmailSendGridConfiguration(
+                ////Valores..... 
+                //)).Wait();
             }
             catch (ApplicationException ex)
             {
